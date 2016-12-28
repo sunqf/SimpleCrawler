@@ -1,7 +1,9 @@
 /* BaikeCrawler.scala */
+import org.apache.spark.rdd.PairRDDFunctions
 import org.apache.spark.SparkContext
 // import org.apache.spark.SparkContext._
 import org.apache.spark.SparkConf
+
 import collection.JavaConverters._
 import java.net.URLEncoder
 import scala.io.Source
@@ -43,8 +45,8 @@ object BaikeCrawler {
       .distinct()
       .cache()
 
-    print(urllist.collect().mkString("\n"))
-    urllist.map(url => {
+    val urlSize = urllist.count()
+    urllist.repartition(urlSize / 1000 toInt).map(url => {
       try {
         val page = Source.fromURL(url).mkString
         (url, page)

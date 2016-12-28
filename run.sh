@@ -1,0 +1,1 @@
+../spark-2.0.0-bin-hadoop2.7/bin/spark-submit --class "BaikeCrawler" --master local[3] --executor-cores 10 --jars lib/jsoup-1.9.2.jar target/scala-2.11/simplecrawler_2.11-1.0-SNAPSHOT.jar list.1000 test
